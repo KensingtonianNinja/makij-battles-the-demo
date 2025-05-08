@@ -9,10 +9,13 @@ namespace SpriteKind {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (TITLE_OPEN == true) {
         sprites.destroyAllSpritesOfKind(SpriteKind.TITLE_SPRITE)
+        music.stopAllSounds()
         GENERATE_UI()
     }
 })
 function GENERATE_UI () {
+    music.play(music.stringPlayable("C5 B A B G E A D ", 120), music.PlaybackMode.LoopingInBackground)
+    music.play(music.createSong(assets.song`bg music`), music.PlaybackMode.LoopingInBackground)
     TITLE_OPEN = false
     ENEMY_PKMN_TXT = textsprite.create("CAKUBOXER", 0, 4)
     ENEMY_PKMN_TXT.setPosition(39, 6)
@@ -101,21 +104,27 @@ function Move_turn (selectionIndex: number, selection: string) {
     if (selection == "Flamethrower") {
         Battle_attack_dmg_calc(2, 1, 50, 230, 291, 95)
         ENEMY_HEALTH.value += move_damage * -1
+        scene.cameraShake(8, 1000)
         game.showLongText("Charizard did " + move_damage + " damage", DialogLayout.Bottom)
     } else if (selection == "Slash") {
         Battle_attack_dmg_calc(4, 1, 50, 230, 291, 70)
         ENEMY_HEALTH.value += move_damage * -1
+        scene.cameraShake(8, 1000)
         game.showLongText("Charizard did " + move_damage + " damage", DialogLayout.Bottom)
     } else if (selection == "Dragon rage") {
         ENEMY_HEALTH.value += -40
-        game.showLongText("Charizard did " + move_damage + " damage", DialogLayout.Bottom)
+        scene.cameraShake(8, 1000)
+        game.showLongText("Charizard did " + "40" + " damage", DialogLayout.Bottom)
     } else if (selection == "Bite") {
         Battle_attack_dmg_calc(5, 1, 50, 230, 291, 60)
         ENEMY_HEALTH.value += move_damage * -1
+        scene.cameraShake(8, 1000)
         game.showLongText("Charizard did " + move_damage + " damage", DialogLayout.Bottom)
     }
     if (ENEMY_HEALTH.value <= 0) {
         game.showLongText("Cakuboxer fainted", DialogLayout.Bottom)
+        game.gameOver(true)
+        game.setGameOverEffect(true, effects.dissolve)
     } else {
         EnemyMove = 0
     }
@@ -155,6 +164,7 @@ namespace userconfig {
     export const ARCADE_SCREEN_HEIGHT = 144
 }
 TITLE_OPEN = true
+music.play(music.createSong(assets.song`opening theme`), music.PlaybackMode.LoopingInBackground)
 scene.setBackgroundColor(1)
 let LOGO = sprites.create(assets.image`myImage30`, SpriteKind.TITLE_SPRITE)
 LOGO.setPosition(78, 29)
