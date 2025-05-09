@@ -27,7 +27,7 @@ function GENERATE_UI () {
     ENEMY_LVL.setPosition(39, 14)
     HUD_2 = sprites.create(assets.image`myImage29`, SpriteKind.Player)
     HUD_2.setPosition(40, 12)
-    PLAYERPOKEMON = sprites.create(assets.image`myImage10`, SpriteKind.Player)
+    PLAYERPOKEMON = sprites.create(assets.image`bomboom back`, SpriteKind.Player)
     PLAYERPOKEMON.setPosition(45, 80)
     PLAYERPOKEMON.setScale(1.5, ScaleAnchor.Middle)
     ENEMYPOKEMON = sprites.create(assets.image`cakuboxer`, SpriteKind.Enemy)
